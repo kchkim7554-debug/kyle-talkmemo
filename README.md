@@ -94,7 +94,7 @@ git add -A && git commit -m "변경 내용" && git push
 | 서비스 워커 · manifest 연결 | 통과 |
 | 콘솔 오류 | 없음 |
 
-검증용으로 잠깐 올렸던 Firebase `board/talkmemo_v1_9852` 데이터는 모두 삭제했습니다(현재 비어 있음).
+검증용으로 잠깐 올렸던 Firebase 테스트 메모는 삭제했습니다. 지금 `talkmemo_v1_9852`에는 앱이 처음 열릴 때 스스로 넣는 안내 메모 3건(`welcome-v1-1~3`)과 설정(`config`)만 있습니다.
 
 ## 5. 동기화 경로 (중요)
 
@@ -143,3 +143,16 @@ python3 tools/smart_post.py --path board note "예약 확인 필요" --cat medic
 - `<meta name="robots" content="noindex, nofollow, noarchive">` + `robots.txt` `Disallow: /`
 - 메모 원문은 브라우저 `localStorage`와(동기화 시) Firebase에 저장됩니다. PIN은 화면 잠금이고 DB 암호화가 아닙니다.
 - 스마트에게 넘길 내용은 설정의 `📋 미완료 메모 복사`로 복사해 대화에 붙여넣으면 됩니다.
+
+## 8. 배포 기록 (2026-11-17)
+
+| 항목 | 값 |
+| --- | --- |
+| 주소 | https://kchkim7554-debug.github.io/kyle-talkmemo/ |
+| 저장소 | `kchkim7554-debug/kyle-talkmemo` (public) |
+| Pages 소스 | `main` / `(root)`, HTTPS 적용, 빌드 상태 `built` |
+| 커밋 | `5bedbbb` 최초 배포 → `1e195cf` README·문구 → `f7883d5` 스크립트 오류 수정 → `7c5e193` 서비스워커 캐시 갱신 |
+| 실사용 확인 | 모바일 390×844에서 잠금 → PIN 7554 → `스마트와 실시간 공유 중 · 전용 경로` 표시, 서비스 워커 등록, 콘솔 오류 없음 |
+| 스크린샷 | `downloads/톡메모-배포-확인.png`, `downloads/톡메모-배포-동기화확인.png` |
+
+> 참고: Pickle의 GitHub 연결에는 Pages 관리 권한이 없어 Pages 켜기는 저장소 관리자(카일 님)가 Settings → Pages에서 직접 했습니다. 앞으로 코드 수정은 `git push`만 하면 몇십 초 뒤 자동으로 다시 배포됩니다.
