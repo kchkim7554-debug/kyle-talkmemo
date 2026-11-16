@@ -44,9 +44,24 @@ projects/kyle-talkmemo/
 
 검증에 쓴 스크립트는 `work/ktm_test.py`(화면·기능), `work/ktm_sync_test.py`(실시간 동기화·답글), `work/ktm_qa.py`(설정·주제·PWA)에 있습니다.
 
-## 3. 열어 보기
+## 3. 접속 주소 (배포 완료)
 
-로컬에서:
+### 👉 https://kchkim7554-debug.github.io/kyle-talkmemo/
+
+- 저장소: `github.com/kchkim7554-debug/kyle-talkmemo` (public, `main` 브랜치 루트)
+- GitHub Pages 소스: `main` / `/(root)` — 2026-11-17 배포
+- 첫 화면에서 PIN **7554** 입력 → 메인
+
+**폰에 앱처럼 붙이기**
+
+1. 폰 브라우저(Chrome·삼성 인터넷)에서 위 주소를 연다.
+2. 메뉴(⋮ 또는 ≡) → **홈 화면에 추가** → 이름 `톡메모` → 추가.
+3. 홈 화면 아이콘으로 열면 주소창 없는 앱 화면으로 뜬다(iOS는 Safari → 공유 → 홈 화면에 추가).
+
+**PIN 바꾸기**: 메인 화면 오른쪽 위 **⚙ 설정** → `🔑 PIN 변경` → 새 4자리 두 번 입력.
+(잊어버리면 기기 데이터를 지워야 하므로, 바꾼 PIN은 따로 적어 두세요.)
+
+로컬에서 열어 보기:
 
 ```bash
 cd projects/kyle-talkmemo
@@ -54,18 +69,13 @@ python3 -m http.server 8787
 # 브라우저에서 http://localhost:8787
 ```
 
-배포(GitHub Pages, 저장소를 만든 뒤):
+다시 배포할 때(앱 폴더 내용이 저장소 루트):
 
 ```bash
-cd projects/kyle-talkmemo
-git init && git add -A && git commit -m "kyle-talkmemo v1.0.0"
-git branch -M main
-git remote add origin https://github.com/kchkim7554-debug/kyle-talkmemo.git
-git push -u origin main
-# Settings → Pages → Branch: main / (root)
+git clone https://github.com/kchkim7554-debug/kyle-talkmemo.git
+cp -r projects/kyle-talkmemo/. kyle-talkmemo/
+git add -A && git commit -m "변경 내용" && git push
 ```
-
-주소는 `https://kchkim7554-debug.github.io/kyle-talkmemo/` 가 됩니다.
 
 ## 4. 검증한 것 (2026-11-17, 로컬 Chromium)
 
@@ -92,11 +102,13 @@ git push -u origin main
 
 | 경로 | 지금 상태 | 비고 |
 | --- | --- | --- |
-| `talkmemo_v1_9852` (전용, 기본값) | ⛔ 권한 거부 → 이 기기 저장 모드 | 규칙을 열면 그대로 실시간 공유 |
-| `board/talkmemo_v1_9852` | ✅ 바로 동작 | 기존 게시판 규칙(공개 읽기·쓰기)을 함께 씀 |
+| `talkmemo_v1_9852` (전용, 기본값) | ✅ 실시간 공유 중 | 2026-11-17 규칙 게시 완료 — 앱을 열면 자동으로 이 경로에 붙습니다 |
+| `board/talkmemo_v1_9852` | ✅ 동작 | 기존 게시판 규칙(공개 읽기·쓰기)을 함께 씀. 안 씀 |
 | 로컬만 | ✅ | 동기화 안 함 |
 
-전용 경로를 쓰려면 Firebase Console → Realtime Database → 규칙에 한 줄을 더합니다.
+게시판 앱 데이터(`board/config`, `board/notices`)는 톡메모가 건드리지 않습니다.
+
+전용 경로 규칙(이미 게시됨, 참고용):
 
 ```json
 {
@@ -107,7 +119,7 @@ git push -u origin main
 }
 ```
 
-규칙을 넣은 뒤 앱 설정에서 경로를 `전용 경로`로 두면 자동으로 잇습니다(앱이 시작할 때 전용 경로를 먼저 확인).
+앱 설정의 경로가 `전용 경로`(기본값)면 자동으로 잇습니다(앱이 시작할 때 전용 경로를 먼저 확인).
 `board/...` 경로는 편하지만 **주소를 아는 사람이 읽을 수 있는 공간**이므로, 개인 메모를 오래 쌓을 곳은 전용 경로를 권합니다.
 
 ## 6. 스마트(저) 쪽에서 쓰는 법
@@ -123,7 +135,7 @@ python3 tools/smart_post.py --path board reply m1abcd "확인했습니다. 12월
 python3 tools/smart_post.py --path board note "예약 확인 필요" --cat medical --todo
 ```
 
-`--path`는 `dedicated` 또는 `board`. 전용 경로가 열리기 전에는 `board`만 동작합니다.
+`--path`는 `dedicated`(기본값, 지금 열려 있음) 또는 `board`(게시판 DB 경로, 안 씀).
 
 ## 7. 개인정보
 
