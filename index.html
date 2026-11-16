@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#12395e">
+<meta name="description" content="카일과 스마트의 전용 메모 · 할 일 채널">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="톡메모">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>카일 · 스마트 톡메모</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= 잠금 화면 (PIN) ================= -->
+<section class="lock" id="lock">
+  <div class="lock-card">
+    <div class="lock-logo">💬</div>
+    <h1 class="lock-title">카일 · 스마트 톡메모</h1>
+    <p class="lock-sub" id="lockSub">PIN 4자리를 입력하세요</p>
+    <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i></div>
+    <p class="lock-msg" id="lockMsg"></p>
+    <div class="keypad" id="keypad">
+      <button type="button" data-k="1">1</button>
+      <button type="button" data-k="2">2</button>
+      <button type="button" data-k="3">3</button>
+      <button type="button" data-k="4">4</button>
+      <button type="button" data-k="5">5</button>
+      <button type="button" data-k="6">6</button>
+      <button type="button" data-k="7">7</button>
+      <button type="button" data-k="8">8</button>
+      <button type="button" data-k="9">9</button>
+      <button type="button" class="wide" data-k="del">지움</button>
+      <button type="button" data-k="0">0</button>
+      <button type="button" class="wide" data-k="ok">확인</button>
+    </div>
+    <p class="lock-foot">카일·스마트 전용 공간입니다.<br>이 화면은 검색에 노출되지 않습니다.</p>
+  </div>
+</section>
+
+<!-- ================= 메인 ================= -->
+<div class="shell" id="shell" hidden>
+  <header class="topbar">
+    <div class="topbar-in">
+      <div class="logo">💬</div>
+      <div class="rb">
+        <div class="rb-title">카일 · 스마트 톡메모</div>
+        <div class="rb-sub"><span class="dot" id="syncDot"></span><span id="syncState">준비 중…</span></div>
+      </div>
+      <button class="iconbtn" id="btnSearch" aria-label="검색" title="검색">🔍</button>
+      <button class="iconbtn" id="btnMenu" aria-label="설정" title="설정">⚙️</button>
+    </div>
+    <div class="searchbar" id="searchbar" hidden>
+      <input id="q" type="search" placeholder="메모 검색 (내용·스마트 답글)" autocomplete="off">
+      <button type="button" id="btnSearchClose">닫기</button>
+    </div>
+  </header>
+
+  <div id="bannerHost"></div>
+
+  <nav class="filters" aria-label="카테고리 필터">
+    <div class="chiprow" id="catChips"></div>
+    <div class="togglebar">
+      <button type="button" class="tg" id="tgOpen">☐ 미완료만</button>
+      <button type="button" class="tg" id="tgStar">★ 중요만</button>
+      <button type="button" class="tg" id="tgOrder">↕ 최신 아래</button>
+      <span class="count" id="count"></span>
+    </div>
+  </nav>
+
+  <main class="list" id="list" aria-live="polite"></main>
+
+  <form class="composer" id="composer" autocomplete="off">
+    <div class="comp-top">
+      <button type="button" class="cchip" id="btnCatPick">🗒️ 일반 메모 ▾</button>
+      <button type="button" class="cflag" id="flagTodo">☑ 할 일</button>
+      <button type="button" class="cflag" id="flagStar">★ 중요</button>
+    </div>
+    <div class="comp-main">
+      <textarea id="input" rows="1" placeholder="메모를 입력하세요" enterkeyhint="enter"></textarea>
+      <button type="submit" class="send" id="btnSend">전송</button>
+    </div>
+  </form>
+</div>
+
+<div class="sheetwrap" id="sheetwrap" hidden>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
