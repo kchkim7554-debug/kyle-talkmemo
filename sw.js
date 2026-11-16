@@ -1,5 +1,5 @@
 /* 카일 · 스마트 톡메모 — 오프라인 셸 캐시 (PWA) */
-var CACHE = "ktm-v1.0.0";
+var CACHE = "ktm-v1.0.0-2"; /* 2026-11-17: app.js 수정 반영 강제 갱신 */
 var FILES = [
   "./",
   "index.html",
